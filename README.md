@@ -64,7 +64,7 @@ const Events = keyMirror({
 
 class Store extends Influx.Store {
   constructor(...args) {
-    super(Dispatcher/*,  additional dispathers you have */);
+    super(Dispatcher/*,  additional dispatchers you have */);
     this.data = {count: 0};
     this.className = this.constructor.name;
   }
