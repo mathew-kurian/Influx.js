@@ -1,6 +1,10 @@
 # Influx.js
 ES6 React 0.14 Component, Dispatcher, Store communication
 
+```
+npm install react-influx
+```
+
 ### Dispatcher.js
 ```jsx
 const Events = keyMirror({
