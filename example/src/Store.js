@@ -20,7 +20,7 @@ class Store extends Influx.Store {
   getDispatcherListeners() {
     return [
       [Dispatcher, Dispatcher.Events.INCREMENT, '_onDispatcherIncrement'],
-      [Dispatcher, Dispatcher.Events.ALERT, '_onDispatcherAlert']
+      [Dispatcher, Dispatcher.Events.ALERT, this._onDispatcherAlert]
     ]
   }
 

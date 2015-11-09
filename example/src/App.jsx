@@ -13,7 +13,7 @@ class App extends Influx.Component {
   getListeners() {
     return [
       [Dispatcher, Dispatcher.Events.ALERT, '_onAlert'],
-      [Store, Store.Events.UPDATED, '_onIncrement']
+      [Store, Store.Events.UPDATED, this._onIncrement]
     ]
   }
 
@@ -26,24 +26,16 @@ class App extends Influx.Component {
     this.setState({count});
   }
 
-  _handleIncrementClick() {
-    Dispatcher.emit(Dispatcher.Events.INCREMENT);
-  }
-
-  _handleAlertClick() {
-    Dispatcher.emit(Dispatcher.Events.ALERT, "Whatsup!");
-  }
-
   render() {
     return (
       <div>
         <h5>Component ▶ Dispatcher ▶ Store ▶ Component</h5>
         <div>{this.state.count}</div>
-        <button onClick={this._handleIncrementClick}>Dispatch INCREMENT</button>
+        <button onClick={()=>Dispatcher.emit(Dispatcher.Events.INCREMENT)}>Dispatch INCREMENT</button>
         <br />
         <h5>Component ▶ Dispatcher ▶ Component</h5>
         <div>{this.state.message}</div>
-        <button onClick={this._handleAlertClick}>Dispatch ALERT</button>
+        <button onClick={()=>Dispatcher.emit(Dispatcher.Events.ALERT, "Whatsup!")}>Dispatch ALERT</button>
       </div>
     )
   }
