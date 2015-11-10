@@ -47,14 +47,16 @@ var Component = (function (_Component2) {
 
           if (g[0].on) {
             g[0].on(g[1], f = function () {
-              var _g$;
+              var _g$, _self$g$;
 
-              if (typeof g[2] === 'function') (_g$ = g[2]).call.apply(_g$, [self].concat(Array.prototype.slice.call(arguments)));else self[g[2]].apply(self, arguments);
+              if (typeof g[2] === 'function') (_g$ = g[2]).call.apply(_g$, [self].concat(Array.prototype.slice.call(arguments)));else (_self$g$ = self[g[2]]).call.apply(_self$g$, [self].concat(Array.prototype.slice.call(arguments)));
             });
           } else {
             f = g[0].register(function (payload) {
               if (payload.event === g[1]) {
-                if (typeof g[2] === 'function') g[2].apply(g, _toConsumableArray(payload.args));else self[g[2]].apply(self, _toConsumableArray(payload.args));
+                var _g$2, _self$g$2;
+
+                if (typeof g[2] === 'function') (_g$2 = g[2]).call.apply(_g$2, [self].concat(_toConsumableArray(payload.args)));else (_self$g$2 = self[g[2]]).call.apply(_self$g$2, [self].concat(_toConsumableArray(payload.args)));
               }
             });
           }

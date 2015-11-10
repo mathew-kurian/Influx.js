@@ -71,8 +71,10 @@ var Store = (function (_EventEmitter) {
         }
 
         _this.dispatcherToken = dispatcher.register(function (payload) {
-          if (_this.onAction) _this.onAction.apply(_this, [payload.event].concat(_toConsumableArray(payload.args)));
-          if (map[payload.event]) if (typeof map[payload.event] === 'function') map[payload.event].apply(map, _toConsumableArray(payload.args));else _this[map[payload.event]].apply(_this, _toConsumableArray(payload.args));
+          var _this$onAction, _map$payload$event, _this$map$payload$eve;
+
+          if (_this.onAction) (_this$onAction = _this.onAction).call.apply(_this$onAction, [_this, payload.event].concat(_toConsumableArray(payload.args)));
+          if (map[payload.event]) if (typeof map[payload.event] === 'function') (_map$payload$event = map[payload.event]).call.apply(_map$payload$event, [_this].concat(_toConsumableArray(payload.args)));else (_this$map$payload$eve = _this[map[payload.event]]).call.apply(_this$map$payload$eve, [_this].concat(_toConsumableArray(payload.args)));
         });
       }
     } catch (err) {
