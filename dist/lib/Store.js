@@ -30,6 +30,8 @@ var Store = (function (_EventEmitter) {
 
     var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Store).call(this));
 
+    var listeners = (_this.getDispatcherListeners || _this.constructor.getDispatcherListeners).call(_this) || [];
+
     for (var _len = arguments.length, dispatchers = Array(_len), _key = 0; _key < _len; _key++) {
       dispatchers[_key] = arguments[_key];
     }
@@ -39,12 +41,10 @@ var Store = (function (_EventEmitter) {
     var _iteratorError = undefined;
 
     try {
-
       for (var _iterator = dispatchers[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
         var dispatcher = _step.value;
 
         var map = {};
-        var listeners = _this.getDispatcherListeners();
         var _iteratorNormalCompletion2 = true;
         var _didIteratorError2 = false;
         var _iteratorError2 = undefined;
@@ -106,8 +106,8 @@ var Store = (function (_EventEmitter) {
       console.log(this.constructor.name, args[0]);
     }
   }, {
-    key: 'getListeners',
-    value: function getListeners() {
+    key: 'getDispatcherListeners',
+    value: function getDispatcherListeners() {
       return [];
     }
   }, {

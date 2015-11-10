@@ -26,8 +26,8 @@ var Component = (function (_Component2) {
   }
 
   _createClass(Component, [{
-    key: 'getStoreListeners',
-    value: function getStoreListeners() {
+    key: 'getListeners',
+    value: function getListeners() {
       return [];
     }
   }, {
