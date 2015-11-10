@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _react = require('react');
+var _reactNative = require('react-native');
 
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) arr2[i] = arr[i]; return arr2; } else { return Array.from(arr); } }
 
@@ -117,6 +117,6 @@ var Component = (function (_Component2) {
   }]);
 
   return Component;
-})(_react.Component);
+})(_reactNative.Component);
 
 exports.default = Component;
