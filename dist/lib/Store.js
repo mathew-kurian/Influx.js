@@ -8,6 +8,11 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _es6Symbol = require('es6-symbol');
+var Symbol = _es6Symbol;
+
+var _es6Symbol2 = _interopRequireDefault(_es6Symbol);
+
 var _events = require('events');
 
 var _events2 = _interopRequireDefault(_events);
@@ -41,7 +46,7 @@ var Store = (function (_EventEmitter) {
     var _iteratorError = undefined;
 
     try {
-      for (var _iterator = dispatchers[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+      for (var _iterator = dispatchers[_es6Symbol2.default.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
         var dispatcher = _step.value;
 
         var map = {};
@@ -50,7 +55,7 @@ var Store = (function (_EventEmitter) {
         var _iteratorError2 = undefined;
 
         try {
-          for (var _iterator2 = listeners[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+          for (var _iterator2 = listeners[_es6Symbol2.default.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
             var l = _step2.value;
 
             if (dispatcher === l[0]) map[l[1]] = l[2];

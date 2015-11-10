@@ -6,7 +6,14 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _es6Symbol = require('es6-symbol');
+var Symbol = _es6Symbol;
+
+var _es6Symbol2 = _interopRequireDefault(_es6Symbol);
+
 var _reactNative = require('react-native');
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) arr2[i] = arr[i]; return arr2; } else { return Array.from(arr); } }
 
@@ -64,7 +71,7 @@ var Component = (function (_Component2) {
           l.push(f);
         };
 
-        for (var _iterator = listeners[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+        for (var _iterator = listeners[_es6Symbol2.default.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
           _loop();
         }
       } catch (err) {
@@ -94,7 +101,7 @@ var Component = (function (_Component2) {
       var _iteratorError2 = undefined;
 
       try {
-        for (var _iterator2 = listeners[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+        for (var _iterator2 = listeners[_es6Symbol2.default.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
           var g = _step2.value;
 
           if (g[0].off) g[0].off(g[1], this._listeners[i++]);else g[0].unregister(this._listeners[i++]);

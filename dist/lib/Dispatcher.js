@@ -10,7 +10,14 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _es6Symbol = require('es6-symbol');
+var Symbol = _es6Symbol;
+
+var _es6Symbol2 = _interopRequireDefault(_es6Symbol);
+
 var _flux = require('flux');
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
