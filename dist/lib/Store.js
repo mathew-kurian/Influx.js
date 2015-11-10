@@ -9,7 +9,6 @@ Object.defineProperty(exports, "__esModule", {
 });
 
 var _es6Symbol = require('es6-symbol');
-var Symbol = _es6Symbol;
 
 var _es6Symbol2 = _interopRequireDefault(_es6Symbol);
 
