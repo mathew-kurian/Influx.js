@@ -19,7 +19,7 @@ module.exports = function (grunt) {
           expand: true,
           cwd: 'example/src/',
           src: ['Bootstrap.jsx'],
-          dest: 'example/',
+          dest: 'example/dist/',
           ext: '.js'
         }]
       },
@@ -40,7 +40,29 @@ module.exports = function (grunt) {
           expand: true,
           cwd: 'example/src/',
           src: ['Bootstrap.jsx'],
-          dest: 'example/',
+          dest: 'example/dist/',
+          ext: '.js'
+        }]
+      }
+    },
+    babel: {
+      options: {
+        sourceMap: false,
+        "presets": ["es2015", "react"],
+        "plugins": ["transform-object-rest-spread"]
+      },
+      dist: {
+        files: [{
+          expand: true,
+          cwd: 'lib/',
+          src: ['*.js'],
+          dest: 'dist/lib/',
+          ext: '.js'
+        },{
+          expand: true,
+          cwd: '',
+          src: ['index.js'],
+          dest: 'dist/',
           ext: '.js'
         }]
       }
@@ -48,7 +70,8 @@ module.exports = function (grunt) {
   });
 
   grunt.loadNpmTasks('grunt-browserify');
+  grunt.loadNpmTasks('grunt-babel');
 
-  grunt.registerTask('build', ['browserify:dist']);
+  grunt.registerTask('build', ['browserify:dist','babel:dist']);
   grunt.registerTask('auto-build', ['browserify:dev']);
 };
