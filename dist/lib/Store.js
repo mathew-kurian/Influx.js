@@ -30,7 +30,7 @@ var Store = (function (_EventEmitter) {
 
     var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Store).call(this));
 
-    var listeners = (_this.getDispatcherListeners || _this.constructor.getDispatcherListeners).call(_this) || [];
+    var listeners = (_this.constructor.getDispatcherListeners || _this.getDispatcherListeners).call(_this) || [];
 
     for (var _len = arguments.length, dispatchers = Array(_len), _key = 0; _key < _len; _key++) {
       dispatchers[_key] = arguments[_key];

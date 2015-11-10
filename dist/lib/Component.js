@@ -36,7 +36,7 @@ var Component = (function (_Component2) {
       var f,
           l = [],
           self = this;
-      var listeners = this._ilisteners = ((this.getListeners || this.constructor.getListeners).call(this) || []).splice(0);
+      var listeners = this._ilisteners = ((this.constructor.getListeners || this.getListeners).call(this) || []).splice(0);
       var _iteratorNormalCompletion = true;
       var _didIteratorError = false;
       var _iteratorError = undefined;
