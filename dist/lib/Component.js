@@ -31,8 +31,8 @@ var Component = (function (_Component2) {
       return [];
     }
   }, {
-    key: 'componentWillMount',
-    value: function componentWillMount() {
+    key: 'startListening',
+    value: function startListening() {
       var f,
           l = [],
           self = this;
@@ -85,8 +85,8 @@ var Component = (function (_Component2) {
       this._listeners = l;
     }
   }, {
-    key: 'componentWillUnmount',
-    value: function componentWillUnmount() {
+    key: 'stopListening',
+    value: function stopListening() {
       var i = 0;
       var listeners = this._ilisteners;
       var _iteratorNormalCompletion2 = true;
@@ -113,6 +113,23 @@ var Component = (function (_Component2) {
           }
         }
       }
+    }
+  }, {
+    key: 'refreshListeners',
+    value: function refreshListeners(cb) {
+      this.stopListening();
+      if (typeof cb === 'function') cb();
+      this.startListening();
+    }
+  }, {
+    key: 'componentWillMount',
+    value: function componentWillMount() {
+      this.startListening();
+    }
+  }, {
+    key: 'componentWillUnmount',
+    value: function componentWillUnmount() {
+      this.stopListening();
     }
   }]);
 
