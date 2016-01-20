@@ -1,6 +1,6 @@
 'use strict';
 
-var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -8,7 +8,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _react = require('react');
 
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) arr2[i] = arr[i]; return arr2; } else { return Array.from(arr); } }
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -16,7 +16,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var Component = (function (_Component2) {
+var Component = function (_Component2) {
   _inherits(Component, _Component2);
 
   function Component() {
@@ -46,7 +46,7 @@ var Component = (function (_Component2) {
           var g = _step.value;
 
           if (g[0].on) {
-            g[0].on(g[1], f = function () {
+            g[0].on(g[1], f = function f() {
               var _g$, _self$g$;
 
               if (typeof g[2] === 'function') (_g$ = g[2]).call.apply(_g$, [self].concat(Array.prototype.slice.call(arguments)));else (_self$g$ = self[g[2]]).call.apply(_self$g$, [self].concat(Array.prototype.slice.call(arguments)));
@@ -95,9 +95,9 @@ var Component = (function (_Component2) {
 
       try {
         for (var _iterator2 = listeners[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-          var g = _step2.value;
+          var _g = _step2.value;
 
-          if (g[0].off) g[0].off(g[1], this._listeners[i++]);else g[0].unregister(this._listeners[i++]);
+          if (_g[0].off) _g[0].off(_g[1], this._listeners[i++]);else _g[0].unregister(this._listeners[i++]);
         }
       } catch (err) {
         _didIteratorError2 = true;
@@ -134,6 +134,6 @@ var Component = (function (_Component2) {
   }]);
 
   return Component;
-})(_react.Component);
+}(_react.Component);
 
 exports.default = Component;

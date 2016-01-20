@@ -1,6 +1,6 @@
 'use strict';
 
-var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
 
@@ -14,7 +14,7 @@ var _events2 = _interopRequireDefault(_events);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) arr2[i] = arr[i]; return arr2; } else { return Array.from(arr); } }
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -22,7 +22,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var Store = (function (_EventEmitter) {
+var Store = function (_EventEmitter) {
   _inherits(Store, _EventEmitter);
 
   function Store() {
@@ -41,7 +41,7 @@ var Store = (function (_EventEmitter) {
     var _iteratorError = undefined;
 
     try {
-      for (var _iterator = dispatchers[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+      var _loop = function _loop() {
         var dispatcher = _step.value;
 
         var map = {};
@@ -76,6 +76,10 @@ var Store = (function (_EventEmitter) {
           if (_this.onAction) (_this$onAction = _this.onAction).call.apply(_this$onAction, [_this, payload.event].concat(_toConsumableArray(payload.args)));
           if (map[payload.event]) if (typeof map[payload.event] === 'function') (_map$payload$event = map[payload.event]).call.apply(_map$payload$event, [_this].concat(_toConsumableArray(payload.args)));else (_this$map$payload$eve = _this[map[payload.event]]).call.apply(_this$map$payload$eve, [_this].concat(_toConsumableArray(payload.args)));
         });
+      };
+
+      for (var _iterator = dispatchers[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+        _loop();
       }
     } catch (err) {
       _didIteratorError = true;
@@ -98,13 +102,17 @@ var Store = (function (_EventEmitter) {
   _createClass(Store, [{
     key: 'emit',
     value: function emit() {
-      var _get2;
+      var _this2 = this;
 
       for (var _len2 = arguments.length, args = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
         args[_key2] = arguments[_key2];
       }
 
-      (_get2 = _get(Object.getPrototypeOf(Store.prototype), 'emit', this)).call.apply(_get2, [this].concat(args));
+      setTimeout(function () {
+        var _get2;
+
+        return (_get2 = _get(Object.getPrototypeOf(Store.prototype), 'emit', _this2)).call.apply(_get2, [_this2].concat(args));
+      }, 0);
       console.log(this.constructor.name, args[0]);
     }
   }, {
@@ -125,7 +133,7 @@ var Store = (function (_EventEmitter) {
   }]);
 
   return Store;
-})(_events2.default);
+}(_events2.default);
 
 Store.construct = function (a, e) {
   var m = new a();
