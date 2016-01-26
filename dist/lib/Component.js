@@ -97,7 +97,7 @@ var Component = function (_Component2) {
         for (var _iterator2 = listeners[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
           var _g = _step2.value;
 
-          if (_g[0].off) _g[0].off(_g[1], this._listeners[i++]);else _g[0].unregister(this._listeners[i++]);
+          if (_g[0].off) _g[0].off(_g[1], this._listeners[i++]);else if (_g[0].unregister) _g[0].unregister(this._listeners[i++]);else if (_g[0].removeListener) _g[0].removeListener(_g[1], this._listeners[i++]);
         }
       } catch (err) {
         _didIteratorError2 = true;
@@ -122,8 +122,8 @@ var Component = function (_Component2) {
       this.startListening();
     }
   }, {
-    key: 'componentWillMount',
-    value: function componentWillMount() {
+    key: 'componentDidMount',
+    value: function componentDidMount() {
       this.startListening();
     }
   }, {

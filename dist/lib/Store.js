@@ -96,6 +96,7 @@ var Store = function (_EventEmitter) {
       }
     }
 
+    _this.dispatcher = dispatchers;
     return _this;
   }
 
@@ -121,9 +122,9 @@ var Store = function (_EventEmitter) {
       return [];
     }
   }, {
-    key: 'getDispatcher',
-    value: function getDispatcher() {
-      return this.dispatcher;
+    key: 'getDispatchers',
+    value: function getDispatchers() {
+      return this.dispatchers;
     }
   }, {
     key: 'getDispatchToken',
