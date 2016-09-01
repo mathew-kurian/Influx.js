@@ -3,6 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.Store = exports.Dispatcher = exports.Component = undefined;
 
 var _Component = require('./lib/Component');
 
@@ -20,4 +21,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var Influx = { Component: _Component2.default, Dispatcher: _Dispatcher2.default, Store: _Store2.default };
 
+exports.Component = _Component2.default;
+exports.Dispatcher = _Dispatcher2.default;
+exports.Store = _Store2.default;
 exports.default = Influx;

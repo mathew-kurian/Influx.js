@@ -4,4 +4,6 @@ import Store from './lib/Store'
 
 const Influx = {Component, Dispatcher, Store};
 
+export {Component, Dispatcher, Store};
+
 export default Influx;

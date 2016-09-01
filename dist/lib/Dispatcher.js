@@ -24,7 +24,7 @@ var Dispatcher = function (_Dispatcher2) {
   function Dispatcher() {
     _classCallCheck(this, Dispatcher);
 
-    return _possibleConstructorReturn(this, Object.getPrototypeOf(Dispatcher).apply(this, arguments));
+    return _possibleConstructorReturn(this, (Dispatcher.__proto__ || Object.getPrototypeOf(Dispatcher)).apply(this, arguments));
   }
 
   _createClass(Dispatcher, [{
@@ -44,7 +44,7 @@ var Dispatcher = function (_Dispatcher2) {
         (_console = console).log.apply(_console, [this.constructor.name, event].concat(args));
       }
 
-      _get(Object.getPrototypeOf(Dispatcher.prototype), 'dispatch', this).call(this, { event: event, args: args });
+      _get(Dispatcher.prototype.__proto__ || Object.getPrototypeOf(Dispatcher.prototype), 'dispatch', this).call(this, { event: event, args: args });
     }
   }, {
     key: 'dispatchAsync',

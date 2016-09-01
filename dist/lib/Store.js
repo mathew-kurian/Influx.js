@@ -28,7 +28,7 @@ var Store = function (_EventEmitter) {
   function Store() {
     _classCallCheck(this, Store);
 
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Store).call(this));
+    var _this = _possibleConstructorReturn(this, (Store.__proto__ || Object.getPrototypeOf(Store)).call(this));
 
     var listeners = (_this.constructor.getDispatcherListeners || _this.getDispatcherListeners).call(_this) || [];
 
@@ -113,7 +113,7 @@ var Store = function (_EventEmitter) {
       setTimeout(function () {
         var _get2;
 
-        return (_get2 = _get(Object.getPrototypeOf(Store.prototype), 'emit', _this2)).call.apply(_get2, [_this2].concat(args));
+        return (_get2 = _get(Store.prototype.__proto__ || Object.getPrototypeOf(Store.prototype), 'emit', _this2)).call.apply(_get2, [_this2].concat(args));
       }, 0);
       console.log(this.constructor.name, args[0]);
     }
