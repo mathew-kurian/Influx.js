@@ -14,8 +14,6 @@ var _events2 = _interopRequireDefault(_events);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
-
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -30,81 +28,78 @@ var Store = function (_EventEmitter) {
 
     var _this = _possibleConstructorReturn(this, (Store.__proto__ || Object.getPrototypeOf(Store)).call(this));
 
-    var listeners = (_this.constructor.getDispatcherListeners || _this.getDispatcherListeners).call(_this) || [];
-
-    for (var _len = arguments.length, dispatchers = Array(_len), _key = 0; _key < _len; _key++) {
-      dispatchers[_key] = arguments[_key];
-    }
-
-    var _iteratorNormalCompletion = true;
-    var _didIteratorError = false;
-    var _iteratorError = undefined;
-
-    try {
-      var _loop = function _loop() {
-        var dispatcher = _step.value;
-
-
-        var map = {};
-        var _iteratorNormalCompletion2 = true;
-        var _didIteratorError2 = false;
-        var _iteratorError2 = undefined;
-
-        try {
-          for (var _iterator2 = listeners[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-            var l = _step2.value;
-
-            if (dispatcher === l[0]) map[l[1]] = l[2];
-          }
-        } catch (err) {
-          _didIteratorError2 = true;
-          _iteratorError2 = err;
-        } finally {
-          try {
-            if (!_iteratorNormalCompletion2 && _iterator2.return) {
-              _iterator2.return();
-            }
-          } finally {
-            if (_didIteratorError2) {
-              throw _iteratorError2;
-            }
-          }
-        }
-
-        _this.dispatcherToken = dispatcher.register(function (payload) {
-          var _this$onAction, _map$payload$event, _this$map$payload$eve;
-
-          if (_this.onAction) (_this$onAction = _this.onAction).call.apply(_this$onAction, [_this, payload.event].concat(_toConsumableArray(payload.args)));
-          if (map[payload.event]) if (typeof map[payload.event] === 'function') (_map$payload$event = map[payload.event]).call.apply(_map$payload$event, [_this].concat(_toConsumableArray(payload.args)));else (_this$map$payload$eve = _this[map[payload.event]]).call.apply(_this$map$payload$eve, [_this].concat(_toConsumableArray(payload.args)));
-        });
-      };
-
-      for (var _iterator = dispatchers[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-        _loop();
-      }
-    } catch (err) {
-      _didIteratorError = true;
-      _iteratorError = err;
-    } finally {
-      try {
-        if (!_iteratorNormalCompletion && _iterator.return) {
-          _iterator.return();
-        }
-      } finally {
-        if (_didIteratorError) {
-          throw _iteratorError;
-        }
-      }
-    }
-
-    _this.dispatcher = dispatchers;
+    _this.setMaxListeners(Number.MAX_SAFE_INTEGER);
+    _this.startListening();
     return _this;
   }
 
   _createClass(Store, [{
+    key: 'startListening',
+    value: function startListening() {
+      var _this2 = this;
+
+      var func = this.getDispatcherListeners || this.getListeners;
+      var defs = (func ? func.call(this) : []).splice(0);
+      var bindings = [];
+
+      var _iteratorNormalCompletion = true;
+      var _didIteratorError = false;
+      var _iteratorError = undefined;
+
+      try {
+        var _loop = function _loop() {
+          var def = _step.value;
+
+          var emitter = def[0];
+          var event = def[1];
+          var listener = def[2];
+
+          if (typeof emitter.on === 'function') {
+            var handler = function handler() {
+              for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+                args[_key] = arguments[_key];
+              }
+
+              if (typeof listener === 'string') {
+                var _listener;
+
+                (_listener = _this2[listener]).call.apply(_listener, [_this2].concat(args));
+              } else {
+                listener.call.apply(listener, [_this2].concat(args));
+              }
+            };
+
+            emitter.on(event, handler);
+            bindings.push({ emitter: emitter, event: event, handler: handler });
+          } else {
+            throw Error('Could not bind to emitter. Does not have function emitter#on(event, listener)');
+          }
+        };
+
+        for (var _iterator = defs[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+          _loop();
+        }
+      } catch (err) {
+        _didIteratorError = true;
+        _iteratorError = err;
+      } finally {
+        try {
+          if (!_iteratorNormalCompletion && _iterator.return) {
+            _iterator.return();
+          }
+        } finally {
+          if (_didIteratorError) {
+            throw _iteratorError;
+          }
+        }
+      }
+
+      this._influxBindings = bindings;
+    }
+  }, {
     key: 'emit',
     value: function emit() {
-      var _this2 = this;
+      var _this3 = this;
 
       for (var _len2 = arguments.length, args = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
         args[_key2] = arguments[_key2];
@@ -113,24 +108,8 @@ var Store = function (_EventEmitter) {
       setTimeout(function () {
         var _get2;
 
-        return (_get2 = _get(Store.prototype.__proto__ || Object.getPrototypeOf(Store.prototype), 'emit', _this2)).call.apply(_get2, [_this2].concat(args));
+        return (_get2 = _get(Store.prototype.__proto__ || Object.getPrototypeOf(Store.prototype), 'emit', _this3)).call.apply(_get2, [_this3].concat(args));
       }, 0);
-      console.log(this.constructor.name, args[0]);
-    }
-  }, {
-    key: 'getDispatcherListeners',
-    value: function getDispatcherListeners() {
-      return [];
-    }
-  }, {
-    key: 'getDispatchers',
-    value: function getDispatchers() {
-      return this.dispatchers;
-    }
-  }, {
-    key: 'getDispatchToken',
-    value: function getDispatchToken() {
-      return this.dispatcherToken;
     }
   }]);
 

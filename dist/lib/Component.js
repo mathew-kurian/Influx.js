@@ -8,8 +8,6 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _react = require('react');
 
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
-
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -20,9 +18,18 @@ var Component = function (_Component2) {
   _inherits(Component, _Component2);
 
   function Component() {
+    var _ref;
+
     _classCallCheck(this, Component);
 
-    return _possibleConstructorReturn(this, (Component.__proto__ || Object.getPrototypeOf(Component)).apply(this, arguments));
+    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    var _this = _possibleConstructorReturn(this, (_ref = Component.__proto__ || Object.getPrototypeOf(Component)).call.apply(_ref, [this].concat(args)));
+
+    _this._influxBindings = [];
+    return _this;
   }
 
   _createClass(Component, [{
@@ -33,38 +40,46 @@ var Component = function (_Component2) {
   }, {
     key: 'startListening',
     value: function startListening() {
-      var f,
-          l = [],
-          self = this;
-      var listeners = this._ilisteners = ((this.constructor.getListeners || this.getListeners).call(this) || []).splice(0);
+      var _this2 = this;
+
+      var defs = ((this.constructor.getListeners || this.getListeners).call(this) || []).splice(0);
+      var bindings = [];
+
       var _iteratorNormalCompletion = true;
       var _didIteratorError = false;
       var _iteratorError = undefined;
 
       try {
         var _loop = function _loop() {
-          var g = _step.value;
+          var def = _step.value;
 
-          if (g[0].on) {
-            g[0].on(g[1], f = function f() {
-              var _g$, _self$g$;
+          var emitter = def[0];
+          var event = def[1];
+          var listener = def[2];
 
-              if (typeof g[2] === 'function') (_g$ = g[2]).call.apply(_g$, [self].concat(Array.prototype.slice.call(arguments)));else (_self$g$ = self[g[2]]).call.apply(_self$g$, [self].concat(Array.prototype.slice.call(arguments)));
-            });
-          } else {
-            f = g[0].register(function (payload) {
-              if (payload.event === g[1]) {
-                var _g$2, _self$g$2;
-
-                if (typeof g[2] === 'function') (_g$2 = g[2]).call.apply(_g$2, [self].concat(_toConsumableArray(payload.args)));else (_self$g$2 = self[g[2]]).call.apply(_self$g$2, [self].concat(_toConsumableArray(payload.args)));
+          if (typeof emitter.on === 'function') {
+            var handler = function handler() {
+              for (var _len2 = arguments.length, args = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+                args[_key2] = arguments[_key2];
               }
-            });
-          }
 
-          l.push(f);
+              if (typeof listener === 'string') {
+                var _listener;
+
+                (_listener = _this2[listener]).call.apply(_listener, [_this2].concat(args));
+              } else {
+                listener.call.apply(listener, [_this2].concat(args));
+              }
+            };
+
+            emitter.on(event, handler);
+            bindings.push({ emitter: emitter, event: event, handler: handler });
+          } else {
+            throw Error('Could not bind to emitter. Does not have function emitter#on(event, listener)');
+          }
         };
 
-        for (var _iterator = listeners[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+        for (var _iterator = defs[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
           _loop();
         }
       } catch (err) {
@@ -82,22 +97,37 @@ var Component = function (_Component2) {
         }
       }
 
-      this._listeners = l;
+      this._influxBindings = bindings;
     }
   }, {
     key: 'stopListening',
     value: function stopListening() {
-      var i = 0;
-      var listeners = this._ilisteners;
+      var bindings = this._influxBindings;
+
       var _iteratorNormalCompletion2 = true;
       var _didIteratorError2 = false;
       var _iteratorError2 = undefined;
 
       try {
-        for (var _iterator2 = listeners[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-          var _g = _step2.value;
+        for (var _iterator2 = bindings[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+          var binding = _step2.value;
 
-          if (_g[0].off) _g[0].off(_g[1], this._listeners[i++]);else if (_g[0].unregister) _g[0].unregister(this._listeners[i++]);else if (_g[0].removeListener) _g[0].removeListener(_g[1], this._listeners[i++]);
+          var _emitter = binding.emitter;
+          var _event = binding.event;
+          var handler = binding.handler;
+
+          var func = void 0;
+          if (typeof _emitter.off === 'function') {
+            func = 'off';
+          } else if (typeof _emitter.removeListener === 'function') {
+            func = 'removeListener';
+          }
+
+          if (func) {
+            _emitter[func](_event, handler);
+          } else {
+            throw Error('Could not unbind to emitter. Does not have function emitter#off(event, listener) or emitter#removeListener(event, listener)');
+          }
         }
       } catch (err) {
         _didIteratorError2 = true;
@@ -124,6 +154,16 @@ var Component = function (_Component2) {
   }, {
     key: 'componentDidMount',
     value: function componentDidMount() {
+      this.startListening();
+    }
+  }, {
+    key: 'componentWillUpdate',
+    value: function componentWillUpdate() {
+      this.stopListening();
+    }
+  }, {
+    key: 'componentDidUpdate',
+    value: function componentDidUpdate() {
       this.startListening();
     }
   }, {
